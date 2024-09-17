@@ -1,0 +1,5 @@
+# Ignore virtual environment directories
+myenv/
+
+# Ignore the downloads directory where audio files are stored
+downloads/

@@ -1,3 +1,4 @@
 pydub
 groq
 pathlib
+yt-dlp

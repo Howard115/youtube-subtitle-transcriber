@@ -42,7 +42,9 @@ def transcribe_audio(file_path, client):
                 language="zh",
                 temperature=0.0
             )
-            print(transcription.text)
+            for char in transcription.text:
+                print(char, end='', flush=True)
+            print(end=" ")  # To ensure the next print starts on a new line
 
 def clean_downloads(directory):
     for file in directory.glob("*"):

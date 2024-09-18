@@ -4,7 +4,6 @@ from pathlib import Path
 from groq import Groq
 from pydub import AudioSegment
 
-URL = input("Enter the URL of the YouTube video: ")
 DOWNLOADS_DIR = Path("./downloads")
 YDL_OPTS = {
     'format': 'm4a/bestaudio/best',
@@ -53,6 +52,10 @@ def clean_downloads(directory):
             print(f"Error deleting file {file}: {e}")
 
 def main():
+    clean_downloads(DOWNLOADS_DIR)
+
+    URL = input("Enter the URL of the YouTube video: ")
+
     video_path_local = download_and_extract_audio(URL)
     
     client = Groq(api_key="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")

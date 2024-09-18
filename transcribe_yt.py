@@ -20,7 +20,7 @@ def download_and_extract_audio(url):
         video_info = ydl.extract_info(url, download=False)
         return Path(f"{video_info['id']}.wav")
 
-def split_audio(file_path, chunk_length_ms=60000):
+def split_audio(file_path, chunk_length_ms=10000):
     audio = AudioSegment.from_wav(file_path)
     chunks = [audio[i:i + chunk_length_ms] for i in range(0, len(audio), chunk_length_ms)]
     chunk_paths = []

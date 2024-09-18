@@ -4,7 +4,7 @@ from pathlib import Path
 from groq import Groq
 from pydub import AudioSegment
 
-DOWNLOADS_DIR = Path("./downloads")
+DOWNLOADS_DIR = Path(__file__).parent / "downloads"
 YDL_OPTS = {
     'format': 'm4a/bestaudio/best',
     'outtmpl': str(DOWNLOADS_DIR / '%(id)s.%(ext)s'),

@@ -72,19 +72,22 @@ def index():
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe():
-    url = request.form['url']
-    clean_downloads(DOWNLOADS_DIR)
-    TRANSCRIPTIONS_DIR.mkdir(exist_ok=True)
+    try:
+        url = request.form['url']
+        clean_downloads(DOWNLOADS_DIR)
+        TRANSCRIPTIONS_DIR.mkdir(exist_ok=True)
 
-    video_id, video_path_local = download_and_extract_audio(url)
-    
-    client = Groq(api_key="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")
-    
-    transcription_text = transcribe_audio(video_path_local, client)
-    
-    clean_downloads(DOWNLOADS_DIR)
-    
-    return jsonify({'transcription': transcription_text})
+        video_id, video_path_local = download_and_extract_audio(url)
+        
+        client = Groq(api_key="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")
+        
+        transcription_text = transcribe_audio(video_path_local, client)
+        
+        clean_downloads(DOWNLOADS_DIR)
+        
+        return jsonify({'transcription': transcription_text})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

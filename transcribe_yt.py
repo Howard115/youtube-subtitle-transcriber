@@ -69,7 +69,7 @@ def main():
 
     video_id, video_path_local = download_and_extract_audio(URL)
     
-    client = OpenAI(api_key="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")
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     
     transcription_file = TRANSCRIPTIONS_DIR / f"{video_id}.txt"
     

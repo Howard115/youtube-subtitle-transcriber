@@ -72,12 +72,13 @@ def index():
 def transcribe():
     try:
         url = request.form['url']
+        api_key = request.form['api_key']  # Get API key from the form
         clean_downloads(DOWNLOADS_DIR)
         TRANSCRIPTIONS_DIR.mkdir(exist_ok=True)
 
         video_id, video_path_local = download_and_extract_audio(url)
         
-        client = OpenAI(api_key="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")
+        client = OpenAI(api_key=api_key)  # Use the API key provided by the user
         
         transcription_text = transcribe_audio(video_path_local, client)
         

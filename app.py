@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 import os
 from pathlib import Path
-from groq import Groq
+from openai import OpenAI
 from pydub import AudioSegment
 import yt_dlp
 import sys
@@ -47,15 +47,13 @@ def transcribe_audio(file_path, client):
         
         with open(chunk_path, "rb") as file:
             transcription = client.audio.transcriptions.create(
-                file=(chunk_path.name, file.read()),
-                model="whisper-large-v3",
-                prompt="Specify context or spelling",
-                response_format="json",
-                language="zh",
-                temperature=0.0
+                model="whisper-1",
+                file=file,
+                response_format="text",
+                language="zh"
             )
-            transcription_text += transcription.text + "\n"
-            print(transcription.text)  # Print each transcription on a new line
+            transcription_text += transcription + "\n"
+            print(transcription)  # Print each transcription on a new line
     print()  # Move to the next line after the progress is complete
     return transcription_text
 
@@ -79,7 +77,7 @@ def transcribe():
 
         video_id, video_path_local = download_and_extract_audio(url)
         
-        client = Groq(api_key="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")
+        client = OpenAI(api_key="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")
         
         transcription_text = transcribe_audio(video_path_local, client)
         

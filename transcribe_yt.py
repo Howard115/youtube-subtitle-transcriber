@@ -4,6 +4,7 @@ import yt_dlp
 from pathlib import Path
 from groq import Groq
 from pydub import AudioSegment
+from openai import OpenAI  # Add this import
 
 DOWNLOADS_DIR = Path(__file__).parent / "downloads"
 TRANSCRIPTIONS_DIR = Path(__file__).parent / "transcriptions"
@@ -44,15 +45,13 @@ def transcribe_audio(file_path, client, transcription_file):
             
             with open(chunk_path, "rb") as file:
                 transcription = client.audio.transcriptions.create(
-                    file=(chunk_path.name, file.read()),
-                    model="whisper-large-v3",
-                    prompt="Specify context or spelling",
-                    response_format="json",
-                    language="zh",
-                    temperature=0.0
+                    model="whisper-1",
+                    file=file,
+                    response_format="text",
+                    language="zh"
                 )
-                subtitle.write(transcription.text + "\n")
-                print(transcription.text)  # Print each transcription on a new line
+                subtitle.write(transcription + "\n")
+                print(transcription)  # Print each transcription on a new line
     print()  # Move to the next line after the progress is complete
 
 def clean_downloads(directory):
@@ -70,7 +69,7 @@ def main():
 
     video_id, video_path_local = download_and_extract_audio(URL)
     
-    client = Groq(api_key="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")
+    client = OpenAI(api_key="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")
     
     transcription_file = TRANSCRIPTIONS_DIR / f"{video_id}.txt"
     

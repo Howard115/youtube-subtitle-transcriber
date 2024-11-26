@@ -9,4 +9,5 @@ downloads/
 # Ignore the transcriptions directory where transcription files are stored
 transcriptions/
 
+# Ignore the .env file
 .env
